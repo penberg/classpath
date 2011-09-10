@@ -48,6 +48,11 @@ import java.util.List;
 public final class MethodType
   implements Serializable
 {
+  private static final long serialVersionUID = -1L;
+
+  private final Class<?> rtype;
+  private final Class<?>[] ptypes;
+
   MethodType(Class<?> rtype, Class<?>[] ptypes)
   {
     this.rtype  = rtype;
@@ -208,9 +213,4 @@ public final class MethodType
   {
     throw new UnsupportedOperationException();
   }
-
-  private final Class<?> rtype;
-  private final Class<?>[] ptypes;
-
-  private static final long serialVersionUID = -1L;
 }

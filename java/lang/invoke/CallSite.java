@@ -46,6 +46,8 @@ package java.lang.invoke;
  */
 public abstract class CallSite
 {
+  private final MethodType type;
+
   CallSite(MethodType type)
   {
     if (type == null)
@@ -87,6 +89,4 @@ public abstract class CallSite
   {
     return type;
   }
-
-  private final MethodType type;
 }

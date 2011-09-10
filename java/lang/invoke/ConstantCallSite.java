@@ -43,6 +43,8 @@ package java.lang.invoke;
 public class ConstantCallSite
   extends CallSite
 {
+  private final MethodHandle target;
+
   public ConstantCallSite(MethodHandle target)
   {
     super(target.type());
@@ -79,6 +81,4 @@ public class ConstantCallSite
   {
     throw new UnsupportedOperationException();
   }
-
-  private final MethodHandle target;
 }
