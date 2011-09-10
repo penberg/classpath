@@ -114,7 +114,7 @@ public abstract class MethodHandle
 
   public String toString()
   {
-    throw new UnsupportedOperationException();
+    return "MethodHandle" + type().toString();
   }
 
   public MethodType type()
