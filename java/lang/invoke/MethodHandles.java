@@ -180,72 +180,86 @@ public class MethodHandles
       throw new UnsupportedOperationException();
     }
 
-    public MethodHandle findStatic(Class<?> refc, String name, MethodType type) throws NoSuchMethodException, IllegalAccessException
+    public MethodHandle findStatic(Class<?> refc, String name, MethodType type)
+      throws NoSuchMethodException, IllegalAccessException
     {
       return VMMethodHandles.findStatic(this, refc, name, type);
     }
 
-    public MethodHandle findVirtual(Class<?> refc, String name, MethodType type) throws NoSuchMethodException, IllegalAccessException
+    public MethodHandle findVirtual(Class<?> refc, String name, MethodType type)
+      throws NoSuchMethodException, IllegalAccessException
     {
       return VMMethodHandles.findVirtual(this, refc, name, type);
     }
 
-    public MethodHandle findConstructor(Class<?> refc, MethodType type) throws NoSuchMethodException, IllegalAccessException
+    public MethodHandle findConstructor(Class<?> refc, MethodType type)
+      throws NoSuchMethodException, IllegalAccessException
     {
       return VMMethodHandles.findConstructor(this, refc, type);
     }
 
-    public MethodHandle findSpecial(Class<?> refc, String name, MethodType type, Class<?> specialCaller) throws NoSuchMethodException, IllegalAccessException
+    public MethodHandle findSpecial(Class<?> refc, String name, MethodType type, Class<?> specialCaller)
+      throws NoSuchMethodException, IllegalAccessException
     {
       return VMMethodHandles.findSpecial(this, refc, name, type, specialCaller);
     }
 
-    public MethodHandle findGetter(Class<?> refc, String name, Class<?> type) throws NoSuchFieldException, IllegalAccessException
+    public MethodHandle findGetter(Class<?> refc, String name, Class<?> type)
+      throws NoSuchFieldException, IllegalAccessException
     {
       return VMMethodHandles.findGetter(this, refc, name, type);
     }
 
-    public MethodHandle findSetter(Class<?> refc, String name, Class<?> type) throws NoSuchFieldException, IllegalAccessException
+    public MethodHandle findSetter(Class<?> refc, String name, Class<?> type)
+      throws NoSuchFieldException, IllegalAccessException
     {
       return VMMethodHandles.findSetter(this, refc, name, type);
     }
 
-    public MethodHandle findStaticGetter(Class<?> refc, String name, Class<?> type) throws NoSuchFieldException, IllegalAccessException
+    public MethodHandle findStaticGetter(Class<?> refc, String name, Class<?> type)
+      throws NoSuchFieldException, IllegalAccessException
     {
       return VMMethodHandles.findStaticGetter(this, refc, name, type);
     }
 
-    public MethodHandle findStaticSetter(Class<?> refc, String name, Class<?> type) throws NoSuchFieldException, IllegalAccessException
+    public MethodHandle findStaticSetter(Class<?> refc, String name, Class<?> type)
+      throws NoSuchFieldException, IllegalAccessException
     {
       return VMMethodHandles.findStaticSetter(this, refc, name, type);
     }
 
-    public MethodHandle bind(Object obj, String name, MethodType type) throws NoSuchMethodException, IllegalAccessException
+    public MethodHandle bind(Object obj, String name, MethodType type)
+      throws NoSuchMethodException, IllegalAccessException
     {
       throw new UnsupportedOperationException();
     }
 
-    public MethodHandle unreflect(Method method) throws IllegalAccessException
+    public MethodHandle unreflect(Method method)
+      throws IllegalAccessException
     {
       throw new UnsupportedOperationException();
     }
 
-    public MethodHandle unreflectSpecial(Method method, Class<?> specialCaller) throws IllegalAccessException
+    public MethodHandle unreflectSpecial(Method method, Class<?> specialCaller)
+      throws IllegalAccessException
     {
       throw new UnsupportedOperationException();
     }
 
-    public MethodHandle unreflectConstructor(Constructor<?> ctor) throws IllegalAccessException
+    public MethodHandle unreflectConstructor(Constructor<?> ctor)
+      throws IllegalAccessException
     {
       throw new UnsupportedOperationException();
     }
 
-    public MethodHandle unreflectGetter(Field field) throws IllegalAccessException
+    public MethodHandle unreflectGetter(Field field)
+      throws IllegalAccessException
     {
       throw new UnsupportedOperationException();
     }
 
-    public MethodHandle unreflectSetter(Field field) throws IllegalAccessException
+    public MethodHandle unreflectSetter(Field field)
+      throws IllegalAccessException
     {
       throw new UnsupportedOperationException();
     }

@@ -39,23 +39,47 @@ package java.lang.invoke;
 
 public final class VMMethodHandles
 {
-    private VMMethodHandles()
-    {
-    }
+  private VMMethodHandles()
+  {
+  }
 
-    static native MethodHandle findStatic(MethodHandles.Lookup lookup, Class<?> refc, String name, MethodType type) throws NoSuchMethodException, IllegalAccessException;
+  static native MethodHandle findStatic(MethodHandles.Lookup lookup,
+                                        Class<?> refc, String name,
+                                        MethodType type)
+    throws NoSuchMethodException, IllegalAccessException;
 
-    static native MethodHandle findVirtual(MethodHandles.Lookup lookup, Class<?> refc, String name, MethodType type) throws NoSuchMethodException, IllegalAccessException;
+  static native MethodHandle findVirtual(MethodHandles.Lookup lookup,
+                                        Class<?> refc, String name,
+                                        MethodType type)
+    throws NoSuchMethodException, IllegalAccessException;
 
-    static native MethodHandle findConstructor(MethodHandles.Lookup lookup, Class<?> refc, MethodType type) throws NoSuchMethodException, IllegalAccessException;
+  static native MethodHandle findConstructor(MethodHandles.Lookup lookup,
+                                        Class<?> refc, MethodType type)
+    throws NoSuchMethodException, IllegalAccessException;
 
-    static native MethodHandle findSpecial(MethodHandles.Lookup lookup, Class<?> refc, String name, MethodType type, Class<?> specialCaller) throws NoSuchMethodException, IllegalAccessException;
+  static native MethodHandle findSpecial(MethodHandles.Lookup lookup,
+                                        Class<?> refc, String name,
+                                        MethodType type,
+                                        Class<?> specialCaller)
+    throws NoSuchMethodException, IllegalAccessException;
 
-    static native MethodHandle findGetter(MethodHandles.Lookup lookup, Class<?> refc, String name, Class<?> type) throws NoSuchFieldException, IllegalAccessException;
+  static native MethodHandle findGetter(MethodHandles.Lookup lookup,
+                                        Class<?> refc, String name,
+                                        Class<?> type)
+    throws NoSuchFieldException, IllegalAccessException;
 
-    static native MethodHandle findSetter(MethodHandles.Lookup lookup, Class<?> refc, String name, Class<?> type) throws NoSuchFieldException, IllegalAccessException;
+  static native MethodHandle findSetter(MethodHandles.Lookup lookup,
+                                        Class<?> refc, String name,
+                                        Class<?> type)
+    throws NoSuchFieldException, IllegalAccessException;
 
-    static native MethodHandle findStaticGetter(MethodHandles.Lookup lookup, Class<?> refc, String name, Class<?> type) throws NoSuchFieldException, IllegalAccessException;
+  static native MethodHandle findStaticGetter(MethodHandles.Lookup lookup,
+                                        Class<?> refc, String name,
+                                        Class<?> type)
+    throws NoSuchFieldException, IllegalAccessException;
 
-    static native MethodHandle findStaticSetter(MethodHandles.Lookup lookup, Class<?> refc, String name, Class<?> type) throws NoSuchFieldException, IllegalAccessException;
+  static native MethodHandle findStaticSetter(MethodHandles.Lookup lookup,
+                                        Class<?> refc, String name,
+                                        Class<?> type)
+    throws NoSuchFieldException, IllegalAccessException;
 }
