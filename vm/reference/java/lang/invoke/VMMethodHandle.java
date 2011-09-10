@@ -37,8 +37,15 @@ exception statement from your version. */
 
 package java.lang.invoke;
 
+import gnu.classpath.Pointer;
+
 public final class VMMethodHandle
 {
+  /**
+   * Pointer to VM method data structure.
+   */
+  Pointer ptr;
+
   /**
    * It is set by the constructor of MethodHandle.
    */
