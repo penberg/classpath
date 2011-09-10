@@ -37,7 +37,13 @@ exception statement from your version. */
 
 package java.lang.invoke;
 
+import gnu.java.lang.CPStringBuilder;
+
 import java.io.Serializable;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.Iterator;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -51,42 +57,61 @@ public final class MethodType
   private static final long serialVersionUID = -1L;
 
   private final Class<?> rtype;
-  private final Class<?>[] ptypes;
+  private final List<Class<?>> ptypes;
 
-  MethodType(Class<?> rtype, Class<?>[] ptypes)
+  MethodType(Class<?> rtype, List<Class<?>> ptypes)
   {
+    if (rtype == null || ptypes == null)
+      throw new NullPointerException();
+
     this.rtype  = rtype;
     this.ptypes = ptypes;
+
+    checkParamTypes();
+  }
+
+  private void checkParamTypes()
+  {
+    for (Class<?> p : ptypes)
+    {
+      if (void.class.equals(p))
+        throw new IllegalArgumentException();
+    }
   }
 
   public static MethodType methodType(Class<?> rtype, Class<?>[] ptypes)
   {
-    return new MethodType(rtype, ptypes);
+    return methodType(rtype, Arrays.asList(ptypes));
   }
 
   public static MethodType methodType(Class<?> rtype, List<Class<?>> ptypes)
   {
-    return methodType(rtype, ptypes.toArray(new Class<?>[0]));
+    return new MethodType(rtype, ptypes);
   }
 
   public static MethodType methodType(Class<?> rtype, Class<?> ptype0, Class<?>... ptypes)
   {
-    throw new UnsupportedOperationException();
+    LinkedList<Class<?>> nptypes = new LinkedList<Class<?>>();
+
+    nptypes.add(ptype0);
+    nptypes.addAll(Arrays.<Class<?>>asList(ptypes));
+
+    return methodType(rtype, nptypes);
   }
 
   public static MethodType methodType(Class<?> rtype)
   {
-    return methodType(rtype, new Class<?>[0]);
+    return methodType(rtype, Collections.<Class<?>>emptyList());
   }
 
-  public static MethodType methodType(Class<?> rtype, Class<?> ptype0)
+  public static MethodType methodType(Class<?> rtype, Class<?> ptype)
   {
-    throw new UnsupportedOperationException();
+    return methodType(rtype, Arrays.<Class<?>>asList(ptype));
   }
 
   public static MethodType methodType(Class<?> rtype, MethodType ptypes)
   {
-    throw new UnsupportedOperationException();
+    return methodType(rtype, ptypes.ptypes);
   }
 
   public static MethodType genericMethodType(int paramCount, boolean lastIsArray)
@@ -101,42 +126,72 @@ public final class MethodType
 
   public MethodType changeParameterType(int idx, Class<?> nptype)
   {
-    throw new UnsupportedOperationException();
+    List<Class<?>> nptypes = new LinkedList<Class<?>>(ptypes);
+
+    nptypes.set(idx, nptype);
+
+    return methodType(rtype, nptypes);
   }
 
   public MethodType insertParameterTypes(int idx, Class<?>... ptypes)
   {
-    throw new UnsupportedOperationException();
+    return insertParameterTypes(idx, Arrays.<Class<?>>asList(ptypes));
   }
 
   public MethodType appendParameterTypes(Class<?>... ptypes)
   {
-    throw new UnsupportedOperationException();
+    return appendParameterTypes(Arrays.<Class<?>>asList(ptypes));
   }
 
-  public MethodType insertParameterTypes(int idx, List<Class<?>> ptypes)
+  public MethodType insertParameterTypes(int idx, List<Class<?>> types)
   {
-    throw new UnsupportedOperationException();
+    List<Class<?>> nptypes = new LinkedList<Class<?>>(ptypes);
+
+    nptypes.addAll(idx, types);
+
+    return methodType(rtype, nptypes);
   }
 
-  public MethodType appendParameterTypes(List<Class<?>> ptypes)
+  public MethodType appendParameterTypes(List<Class<?>> types)
   {
-    throw new UnsupportedOperationException();
+    List<Class<?>> nptypes = new LinkedList<Class<?>>(ptypes);
+
+    nptypes.addAll(types);
+
+    return methodType(rtype, nptypes);
   }
 
   public MethodType dropParameterTypes(int start, int end)
   {
-    throw new UnsupportedOperationException();
+    if (start < 0 || start > parameterCount() || end < 0 || end > parameterCount() || end > start)
+      throw new IndexOutOfBoundsException();
+
+    int len = end-start;
+
+    List<Class<?>> nptypes = new LinkedList<Class<?>>(ptypes);
+
+    while (len-- > 0)
+      nptypes.remove(start);
+
+    return methodType(rtype, nptypes);
   }
 
   public MethodType changeReturnType(Class<?> type)
   {
-    throw new UnsupportedOperationException();
+    return methodType(type, ptypes);
   }
 
   public boolean hasPrimitives()
   {
-    throw new UnsupportedOperationException();
+    if (rtype.isPrimitive())
+      return true;
+
+    for (Class<?> p : ptypes) {
+      if (p.isPrimitive())
+        return true;
+    }
+
+    return false;
   }
 
   public boolean hasWrappers()
@@ -166,12 +221,12 @@ public final class MethodType
 
   public Class<?> parameterType(int idx)
   {
-    throw new UnsupportedOperationException();
+    return ptypes.get(idx);
   }
 
   public int parameterCount()
   {
-    return ptypes.length;
+    return ptypes.size();
   }
 
   public Class<?> returnType()
@@ -181,12 +236,12 @@ public final class MethodType
 
   public List<Class<?>> parameterList()
   {
-    throw new UnsupportedOperationException();
+    return Collections.unmodifiableList(ptypes);
   }
 
   public Class<?>[] parameterArray()
   {
-    return ptypes;
+    return ptypes.toArray(new Class<?>[0]);
   }
 
   public boolean equals(Object object)
@@ -201,7 +256,20 @@ public final class MethodType
 
   public String toString()
   {
-    throw new UnsupportedOperationException();
+    Iterator<Class<?>> itr = ptypes.iterator();
+    CPStringBuilder r = new CPStringBuilder("(");
+    boolean hasNext = itr.hasNext();
+    while (hasNext)
+      {
+        Class<?> current = itr.next();
+        r.append(current.getSimpleName());
+        hasNext = itr.hasNext();
+        if (hasNext)
+          r.append(",");
+      }
+    r.append(")");
+    r.append(rtype.getSimpleName());
+    return r.toString();
   }
 
   public static MethodType fromMethodDescriptorString(String descriptor, ClassLoader loader) throws IllegalArgumentException, TypeNotPresentException
