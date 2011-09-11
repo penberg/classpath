@@ -244,9 +244,17 @@ public final class MethodType
     return ptypes.toArray(new Class<?>[0]);
   }
 
-  public boolean equals(Object object)
+  public boolean equals(Object obj)
   {
-    throw new UnsupportedOperationException();
+    if (this == obj)
+      return true;
+
+    if (!(obj instanceof MethodType))
+      return false;
+
+    MethodType mh = (MethodType) obj;
+
+    return rtype.equals(mh.rtype) && ptypes.equals(mh.ptypes);
   }
 
   public int hashCode()
