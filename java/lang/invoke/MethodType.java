@@ -287,6 +287,45 @@ public final class MethodType
 
   public String toMethodDescriptorString()
   {
-    throw new UnsupportedOperationException();
+    Iterator<Class<?>> itr = ptypes.iterator();
+    CPStringBuilder r = new CPStringBuilder("(");
+    for (Class<?> ptype : ptypes)
+      {
+        appendClassDescriptor(r, ptype);
+      }
+    r.append(")");
+    appendClassDescriptor(r, rtype);
+    return r.toString();
+  }
+
+  private static void appendClassDescriptor(CPStringBuilder r, Class<?> klass)
+  {
+    if (klass.isPrimitive())
+      {
+        if (byte.class.equals(klass))
+          r.append('B');
+        else if (char.class.equals(klass))
+          r.append('C');
+        else if (double.class.equals(klass))
+          r.append('D');
+        else if (float.class.equals(klass))
+          r.append('F');
+        else if (int.class.equals(klass))
+          r.append('I');
+        else if (long.class.equals(klass))
+          r.append('J');
+        else if (short.class.equals(klass))
+          r.append('S');
+        else if (boolean.class.equals(klass))
+          r.append('Z');
+        else if (void.class.equals(klass))
+          r.append('V');
+      }
+    else
+      {
+        r.append('L');
+        r.append(klass.getName().replace('.','/'));
+        r.append(';');
+      }
   }
 }
