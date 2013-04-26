@@ -245,7 +245,7 @@ public final class Long extends Number implements Comparable<Long>
    */
   public static String toHexString(long l)
   {
-    return toUnsignedString(l, 4);
+    return toUnsignedString0(l, 4);
   }
 
   /**
@@ -257,7 +257,7 @@ public final class Long extends Number implements Comparable<Long>
    */
   public static String toOctalString(long l)
   {
-    return toUnsignedString(l, 3);
+    return toUnsignedString0(l, 3);
   }
 
   /**
@@ -269,7 +269,7 @@ public final class Long extends Number implements Comparable<Long>
    */
   public static String toBinaryString(long l)
   {
-    return toUnsignedString(l, 1);
+    return toUnsignedString0(l, 1);
   }
 
   /**
@@ -601,6 +601,11 @@ public final class Long extends Number implements Comparable<Long>
     return Long.valueOf(x).compareTo(Long.valueOf(y));
   }
 
+  public static int compareUnsigned(long x, long y)
+  {
+    throw new UnsupportedOperationException();
+  }
+
   /**
    * Return the number of bits set in x.
    * @param x value to examine
@@ -744,7 +749,7 @@ public final class Long extends Number implements Comparable<Long>
    * @param num the number
    * @param exp log2(digit) (ie. 1, 3, or 4 for binary, oct, hex)
    */
-  private static String toUnsignedString(long num, int exp)
+  private static String toUnsignedString0(long num, int exp)
   {
     // Compute string length
     int size = 1;
@@ -843,5 +848,48 @@ public final class Long extends Number implements Comparable<Long>
           throw new NumberFormatException();
       }
     return isNeg ? -val : val;
+  }
+
+  public static String toUnsignedString(long value, int radix)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public static String toUnsignedString(long value)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public static long parseUnsignedLong(String value)
+    throws NumberFormatException
+  {
+    return parseUnsignedLong(value, 10);
+  }
+
+  public static long parseUnsignedLong(String value, int radix)
+    throws NumberFormatException
+  {
+    if (value == null || value.length() == 0)
+      throw new NumberFormatException();
+
+    if (radix < Character.MIN_RADIX || radix > Character.MAX_RADIX)
+      throw new NumberFormatException();
+
+    char ch = value.charAt(0);
+
+    if (ch != '+' && !Character.isDigit(ch))
+      throw new NumberFormatException();
+
+    return parseLong(value, radix, false);
+  }
+
+  public static long divideUnsigned(long x, long y)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public static long remainderUnsigned(long x, long y)
+  {
+    throw new UnsupportedOperationException();
   }
 }

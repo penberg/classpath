@@ -397,4 +397,28 @@ public final class Short extends Number implements Comparable<Short>
   {
     return (short) (((val >> 8) & 0xff) | ((val << 8) & 0xff00));
   }
+
+  /**
+   * Converts <code>value</code> to an unsigned int.
+   *
+   * @param value the value to convert.
+   * @return <code>value</code> as an unsigned int.
+   * @since 1.8
+   */
+  public static int toUnsignedInt(short value)
+  {
+    return value & 0xffff;
+  }
+
+  /**
+   * Converts <code>value</code> to an unsigned long.
+   *
+   * @param value the value to convert.
+   * @return <code>value</code> as an unsigned long.
+   * @since 1.8
+   */
+  public static long toUnsignedLong(short value)
+  {
+    return value & 0xffffL;
+  }
 }

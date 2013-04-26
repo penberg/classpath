@@ -387,4 +387,27 @@ public final class Byte extends Number implements Comparable<Byte>
     return Byte.valueOf(x).compareTo(Byte.valueOf(y));
   }
 
+  /**
+   * Converts <code>value</code> to an unsigned int.
+   *
+   * @param value the value to convert.
+   * @return <code>value</code> as an unsigned int.
+   * @since 1.8
+   */
+  public static int toUnsignedInt(byte value)
+  {
+    return value & 0xff;
+  }
+
+  /**
+   * Converts <code>value</code> to an unsigned long.
+   *
+   * @param value the value to convert.
+   * @return <code>value</code> as an unsigned long.
+   * @since 1.8
+   */
+  public static long toUnsignedLong(byte value)
+  {
+    return value & 0xffL;
+  }
 }

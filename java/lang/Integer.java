@@ -246,7 +246,7 @@ public final class Integer extends Number implements Comparable<Integer>
    */
   public static String toHexString(int i)
   {
-    return toUnsignedString(i, 4);
+    return toUnsignedString0(i, 4);
   }
 
   /**
@@ -258,7 +258,7 @@ public final class Integer extends Number implements Comparable<Integer>
    */
   public static String toOctalString(int i)
   {
-    return toUnsignedString(i, 3);
+    return toUnsignedString0(i, 3);
   }
 
   /**
@@ -270,7 +270,7 @@ public final class Integer extends Number implements Comparable<Integer>
    */
   public static String toBinaryString(int i)
   {
-    return toUnsignedString(i, 1);
+    return toUnsignedString0(i, 1);
   }
 
   /**
@@ -602,6 +602,11 @@ public final class Integer extends Number implements Comparable<Integer>
     return Integer.valueOf(x).compareTo(Integer.valueOf(y));
   }
 
+  public static int compareUnsigned(int x, int y)
+  {
+    throw new UnsupportedOperationException();
+  }
+
   /**
    * Return the number of bits set in x.
    * @param x value to examine
@@ -746,8 +751,7 @@ public final class Integer extends Number implements Comparable<Integer>
    * @param num the number
    * @param exp log2(digit) (ie. 1, 3, or 4 for binary, oct, hex)
    */
-  // Package visible for use by Long.
-  static String toUnsignedString(int num, int exp)
+  private static String toUnsignedString0(int num, int exp)
   {
     // Compute string length
     int size = 1;
@@ -854,5 +858,75 @@ public final class Integer extends Number implements Comparable<Integer>
           throw new NumberFormatException("invalid character at position " + index + " in " + str);
       }
     return isNeg ? -val : val;
+  }
+
+  /**
+   * Converts <code>value</code> to a string representing unsigned integer.
+   *
+   * @param value The value to convert.
+   * @return a string representing <code>value</code> as unsignedi integer.
+   * @since 1.8
+   */
+  public static String toUnsignedString(int value)
+  {
+    return Long.toString(toUnsignedLong(value));
+  }
+
+  /**
+   * Converts <code>value</code> to a string representing unsigned integer.
+   *
+   * @param value The value to convert.
+   * @param radix The radix of returned string representation.
+   * @return a string representing <code>value</code> as unsigned integer.
+   * @since 1.8
+   */
+  public static String toUnsignedString(int value, int radix)
+  {
+    return Long.toString(toUnsignedLong(value), radix);
+  }
+
+  /**
+   * Converts <code>value</code> to an unsigned long.
+   *
+   * @param value the value to convert.
+   * @return <code>value</code> as an unsigned long.
+   * @since 1.8
+   */
+  public static long toUnsignedLong(int value)
+  {
+    return value & 0xffffffffL;
+  }
+
+  public static int parseUnsignedInt(String value)
+    throws NumberFormatException
+  {
+    return parseUnsignedInt(value, 10);
+  }
+
+  public static int parseUnsignedInt(String value, int radix)
+    throws NumberFormatException
+  {
+    if (value == null || value.length() == 0)
+      throw new NumberFormatException();
+
+    if (radix < Character.MIN_RADIX || radix > Character.MAX_RADIX)
+      throw new NumberFormatException();
+
+    char ch = value.charAt(0);
+
+    if (ch != '+' && !Character.isDigit(ch))
+      throw new NumberFormatException();
+
+    return parseInt(value, radix, false);
+  }
+
+  public static int divideUnsigned(int x, int y)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public static int remainderUnsigned(int x, int y)
+  {
+    throw new UnsupportedOperationException();
   }
 }

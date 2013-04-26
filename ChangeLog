@@ -1,3 +1,13 @@
+2013-04-26  Pekka Enberg  <penberg@kernel.org>
+
+	* java/lang/Byte.java:
+	(toUnsignedInt(byte)): Add unsigned integer arithmetic API.
+	(toUnsignedLong(byte)): Likewise.
+	* java/lang/Integer.java:
+	(toUnsignedString(int)): Likewise.
+	(toUnsignedString(int, int)): Likewise.
+	(toUnsignedLong(int)): Likewise.
+
 2013-03-12  Pekka Enberg <penberg@kernel.org>
 
 	* autogen.sh:
